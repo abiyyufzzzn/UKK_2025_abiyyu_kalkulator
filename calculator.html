@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #03cdff;
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #result {
+            width: 85%;
+            height: 40px;
+            font-size: 20px;
+            text-align: right;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .top-row button {
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .top-row button:hover {
+            background-color: #0056b3;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <!-- Top row with Clear button and Percent button -->
+        <div class="top-row">
+            <button onclick="calculator.clearResult()" style="background-color: red;">C</button>
+            <input type="text" id="result" disabled>
+        </div>
+        
+        <!-- Buttons grid -->
+        <div class="buttons">
+            <button onclick="calculator.appendToResult('%')">%</button>
+            <button onclick="calculator.appendToResult('7')">7</button>
+            <button onclick="calculator.appendToResult('8')">8</button>
+            <button onclick="calculator.appendToResult('9')">9</button>
+            <button onclick="calculator.appendToResult('/')">/</button>
+            <button onclick="calculator.appendToResult('4')">4</button>
+            <button onclick="calculator.appendToResult('5')">5</button>
+            <button onclick="calculator.appendToResult('6')">6</button>
+            <button onclick="calculator.appendToResult('*')">*</button>
+            <button onclick="calculator.appendToResult('1')">1</button>
+            <button onclick="calculator.appendToResult('2')">2</button>
+            <button onclick="calculator.appendToResult('3')">3</button>
+            <button onclick="calculator.appendToResult('-')">-</button>
+            <button onclick="calculator.appendToResult('+')">+</button>
+            <button onclick="calculator.appendToResult('0')">0</button>
+            <button onclick="calculator.calculateResult()">=</button>
+        </div>
+    </div>
+    <script>
+        class Calculator {
+            constructor() {
+                this.resultField = document.getElementById('result');
+            }
+
+            appendToResult(value) {
+                this.resultField.value += value;
+            }
+
+            clearResult() {
+                this.resultField.value = '';
+            }
+
+            calculateResult() {
+                try {
+                    this.resultField.value = eval(this.resultField.value);
+                } catch (error) {
+                    this.resultField.value = 'Error';
+                }
+            }
+
+            calculatePercentage() {
+                try {
+                    const value = eval(this.resultField.value);
+                    // Calculate percentage
+                    this.resultField.value = value / 100;
+                } catch (error) {
+                    this.resultField.value = 'Error';
+                }
+            }
+        }
+
+        const calculator = new Calculator();
+    </script>
+</body>
+</html>
