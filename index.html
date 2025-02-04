@@ -72,20 +72,21 @@
 
         button:hover {
             background-color: #0056b3;
+            box-shadow: #0151a6;
         }
+        
     </style>
 </head>
 <body>
     <div class="calculator">
-        <!-- Top row with Clear button and Percent button -->
+        <!-- Top row with Clear button -->
         <div class="top-row">
-            <button onclick="calculator.clearResult()" style="background-color: red;">C</button>
+            <button onclick="calculator.clearResult()" style="background-color: red">C</button>
             <input type="text" id="result" disabled>
         </div>
         
         <!-- Buttons grid -->
         <div class="buttons">
-            <button onclick="calculator.appendToResult('%')">%</button>
             <button onclick="calculator.appendToResult('7')">7</button>
             <button onclick="calculator.appendToResult('8')">8</button>
             <button onclick="calculator.appendToResult('9')">9</button>
@@ -100,7 +101,9 @@
             <button onclick="calculator.appendToResult('-')">-</button>
             <button onclick="calculator.appendToResult('+')">+</button>
             <button onclick="calculator.appendToResult('0')">0</button>
+            <!-- Move the backspace button here, after the 0 button -->
             <button onclick="calculator.calculateResult()">=</button>
+            <button onclick="calculator.deleteLast()" style="background-color: orange;">←</button>
         </div>
     </div>
     <script>
@@ -110,6 +113,7 @@
             }
 
             appendToResult(value) {
+                // Add the new value to the result field
                 this.resultField.value += value;
             }
 
@@ -119,20 +123,28 @@
 
             calculateResult() {
                 try {
-                    this.resultField.value = eval(this.resultField.value);
+                    // Remove commas before evaluating the expression
+                    let result = eval(this.resultField.value.replace(/\./g, '').replace(/[^0-9+\-*/.]/g, ''));
+
+                    // Check if the result is a valid number
+                    if (typeof result === 'number') {
+                        // Limit to 3 decimal places
+                        result = result.toFixed(3);
+
+                        // Format the result with thousands separator
+                        result = parseFloat(result).toLocaleString('id-ID'); // Format with thousands separator
+
+                        this.resultField.value = result;
+                    } else {
+                        this.resultField.value = 'Error';
+                    }
                 } catch (error) {
                     this.resultField.value = 'Error';
                 }
             }
 
-            calculatePercentage() {
-                try {
-                    const value = eval(this.resultField.value);
-                    // Calculate percentage
-                    this.resultField.value = value / 100;
-                } catch (error) {
-                    this.resultField.value = 'Error';
-                }
+            deleteLast() {
+                this.resultField.value = this.resultField.value.slice(0, -1);
             }
         }
 
