@@ -3,54 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator</title>
+    <title>Kalkulator Neumorphism</title>
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #03cdff;
+            background-color: #d3d3d3;
             font-family: Arial, sans-serif;
+            background-image: url(https://t4.ftcdn.net/jpg/08/28/85/47/360_F_828854704_93yE7JeQR1ggqpG8Rjzu4NmQR98ahjSP.jpg);
         }
 
         .calculator {
-            background: white;
+            background: #e0e0e0;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            /* box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff; */
+            transition: background-color 0.1s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator:hover {
+            box-shadow: 15px 15px 30px #000000, -15px -15px 30px #000000;
+
         }
 
         #result {
-            width: 85%;
-            height: 40px;
-            font-size: 20px;
+            width: 93%;
+            height: 50px;
+            font-size: 24px;
             text-align: right;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        .top-row {
-            display: flex;
-            justify-content: flex-start;
-            margin-bottom: 10px;
-        }
-
-        .top-row button {
-            padding: 20px;
-            font-size: 18px;
+            margin-bottom: 15px;
             border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .top-row button:hover {
-            background-color: #0056b3;
+            border-radius: 10px;
+            padding: 10px;
+            background: #f0f0f0;
+            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
         }
 
         .buttons {
@@ -61,51 +49,73 @@
 
         button {
             padding: 20px;
-            font-size: 18px;
+            font-size: 20px;
             border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
+            border-radius: 10px;
+            background: #e0e0e0;
+            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: 0.2s;
+        }
+
+        button:active {
+            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
         }
 
         button:hover {
-            background-color: #0056b3;
-            box-shadow: #0151a6;
+            box-shadow: 5px 5px 20px #7c7c7c, -5px -5px 20px #7c7c7c;
+            background-color: #7c7c7c;
         }
-        
+
+        .operator {
+            background: #000;
+            color: white;
+            transition: background-color 0.1s ease, box-shadow 0.3s ease;
+        }
+        .operator:hover {
+            background-color: rgb(124, 2, 2);
+            box-shadow: 0 0 10px rgb(124, 2, 2);
+        }
+
+        .clear {
+            background: red;
+            color: white;
+            transition: background-color 0.1s ease, box-shadow 0.3s ease;
+        }
+        .clear:hover {
+            background-color: rgb(124, 2, 2);
+            box-shadow: 0 0 10px rgb(124, 2, 2);
+        }
+
     </style>
 </head>
 <body>
     <div class="calculator">
-        <!-- Top row with Clear button -->
-        <div class="top-row">
-            <button onclick="calculator.clearResult()" style="background-color: red">C</button>
-            <input type="text" id="result" disabled>
-        </div>
-        
-        <!-- Buttons grid -->
+        <input type="text" id="result" disabled>
+
         <div class="buttons">
             <button onclick="calculator.appendToResult('7')">7</button>
             <button onclick="calculator.appendToResult('8')">8</button>
             <button onclick="calculator.appendToResult('9')">9</button>
-            <button onclick="calculator.appendToResult('/')">/</button>
+            <button class="operator" onclick="calculator.appendToResult('+')">+</button>
+
             <button onclick="calculator.appendToResult('4')">4</button>
             <button onclick="calculator.appendToResult('5')">5</button>
             <button onclick="calculator.appendToResult('6')">6</button>
-            <button onclick="calculator.appendToResult('*')">*</button>
+            <button class="operator" onclick="calculator.appendToResult('-')">-</button>
+
             <button onclick="calculator.appendToResult('1')">1</button>
             <button onclick="calculator.appendToResult('2')">2</button>
             <button onclick="calculator.appendToResult('3')">3</button>
-            <button onclick="calculator.appendToResult('-')">-</button>
-            <button onclick="calculator.appendToResult('+')">+</button>
+            <button class="operator" onclick="calculator.appendToResult('*')">×</button>
+
+            <button class="clear" onclick="calculator.clearResult()">C</button>
             <button onclick="calculator.appendToResult('0')">0</button>
-            <!-- Move the backspace button here, after the 0 button -->
             <button onclick="calculator.calculateResult()">=</button>
-            <button onclick="calculator.deleteLast()" style="background-color: orange;">←</button>
+            <button class="operator" onclick="calculator.deleteLast()">←</button>
         </div>
     </div>
+
     <script>
         class Calculator {
             constructor() {
@@ -113,7 +123,6 @@
             }
 
             appendToResult(value) {
-                // Add the new value to the result field
                 this.resultField.value += value;
             }
 
@@ -123,21 +132,7 @@
 
             calculateResult() {
                 try {
-                    // Remove commas before evaluating the expression
-                    let result = eval(this.resultField.value.replace(/\./g, '').replace(/[^0-9+\-*/.]/g, ''));
-
-                    // Check if the result is a valid number
-                    if (typeof result === 'number') {
-                        // Limit to 3 decimal places
-                        result = result.toFixed(3);
-
-                        // Format the result with thousands separator
-                        result = parseFloat(result).toLocaleString('id-ID'); // Format with thousands separator
-
-                        this.resultField.value = result;
-                    } else {
-                        this.resultField.value = 'Error';
-                    }
+                    this.resultField.value = eval(this.resultField.value);
                 } catch (error) {
                     this.resultField.value = 'Error';
                 }
