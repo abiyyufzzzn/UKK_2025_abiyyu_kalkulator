@@ -12,28 +12,32 @@
             height: 100vh;
             background-color: #d3d3d3;
             font-family: Arial, sans-serif;
-            background-image: url(https://t4.ftcdn.net/jpg/08/28/85/47/360_F_828854704_93yE7JeQR1ggqpG8Rjzu4NmQR98ahjSP.jpg);
+            background-image: url(https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
         }
 
         .calculator {
             background: #e0e0e0;
             padding: 20px;
             border-radius: 20px;
-            /* box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff; */
             transition: background-color 0.1s ease, box-shadow 0.3s ease;
         }
 
         .calculator:hover {
             box-shadow: 15px 15px 30px #000000, -15px -15px 30px #000000;
+        }
 
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         #result {
-            width: 93%;
+            width: 70%;
             height: 50px;
             font-size: 24px;
             text-align: right;
-            margin-bottom: 15px;
             border: none;
             border-radius: 10px;
             padding: 10px;
@@ -87,12 +91,31 @@
             box-shadow: 0 0 10px rgb(124, 2, 2);
         }
 
+        .backspace {
+            padding: 20px 37px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            background: red;
+            color: white;
+            box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .backspace:hover {
+            background-color: rgb(124, 2, 2);
+            box-shadow: 0 0 10px rgb(124, 2, 2);
+        }
     </style>
 </head>
 <body>
     <div class="calculator">
-        <input type="text" id="result" disabled>
-
+        <div class="top-section">
+            <input type="text" id="result" disabled>
+            <button class="backspace" onclick="calculator.deleteLast()">←</button>
+        </div>
+        
         <div class="buttons">
             <button onclick="calculator.appendToResult('7')">7</button>
             <button onclick="calculator.appendToResult('8')">8</button>
@@ -112,7 +135,7 @@
             <button class="clear" onclick="calculator.clearResult()">C</button>
             <button onclick="calculator.appendToResult('0')">0</button>
             <button onclick="calculator.calculateResult()">=</button>
-            <button class="operator" onclick="calculator.deleteLast()">←</button>
+            <button class="operator" onclick="calculator.appendToResult('/')">÷</button>
         </div>
     </div>
 
